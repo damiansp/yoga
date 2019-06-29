@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
- "doBothSides": true,
- "minTime":
- "maxTime":}
+{"asana": "salamba sarvangasana 1",
+    "hindi": "सालमब सार्वागंासन १" ,
+ "english": "shoulder stand 1",
+ "images": [223, 224],
+ "doBothSides": false,
+ "minTime": 60,
+ "maxTime": 300}

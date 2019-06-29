@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
- "doBothSides": true,
- "minTime":
- "maxTime":}
+{"asana": "tadasana",
+ "hindi": "ताडासन",
+ "english": "standing warrior",
+ "images": [1],
+ "doBothSides": false,
+ "minTime": 15
+ "maxTime": 30}

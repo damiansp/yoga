@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
+{"asana": "vrksasana",
+ "hindi": "वृकषासन",
+ "english": "tree",
+ "images": [2],
  "doBothSides": true,
- "minTime":
- "maxTime":}
+ "minTime": 15
+ "maxTime": 30}

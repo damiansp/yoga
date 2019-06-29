@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
+{"asana": "virabhadrasana 1",
+ "hindi": "वीरभद्रासन १",
+ "english": "warrior 1",
+ "images": [14],
  "doBothSides": true,
- "minTime":
- "maxTime":}
+ "minTime": 20,
+ "maxTime": 30}

@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
+{"asana": "parsvottanasana",
+ "hindi": "पार्शवौत्तानासन",
+ "english": "flank extended",
+ "images": [26],
  "doBothSides": true,
- "minTime":
- "maxTime":}
+ "minTime": 20,
+ "maxTime": 30}

@@ -1,6 +1,7 @@
-{"asana": "",
- "english": "",
- "images": [],
+{"asana": "utthita trikonasasa",
+ "hindi": "उत्थित त्रिोनासन",
+ "english": "extended triangle",
+    "images": [4, 5],
  "doBothSides": true,
- "minTime":
- "maxTime":}
+ "minTime": 30
+ "maxTime": 60}
