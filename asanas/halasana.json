@@ -2,6 +2,6 @@
  "hindi": "हलासन",
  "english": "plough",
  "images": [244],
- "doBothSides": true,
+ "doBothSides": false,
  "minTime": 60,
  "maxTime": 300}
