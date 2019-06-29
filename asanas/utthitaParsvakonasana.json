@@ -3,5 +3,5 @@
  "english": "extended side angle",
  "images": [8, 9],
  "doBothSides": true,
- "minTime": 30
+ "minTime": 30,
  "maxTime": 60}

@@ -3,5 +3,5 @@
  "english": "tree",
  "images": [2],
  "doBothSides": true,
- "minTime": 15
+ "minTime": 15,
  "maxTime": 30}

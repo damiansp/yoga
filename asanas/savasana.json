@@ -1,7 +1,7 @@
-{"asana": "",
- "hindi": "",
- "english": "",
- "images": [],
- "doBothSides": true,
- "minTime":
- "maxTime":}
+{"asana": "savasana",
+ "hindi": "शवासन",
+ "english": "corpse",
+ "images": [592],
+ "doBothSides": false,
+ "minTime": 180,
+ "maxTime": 300}
