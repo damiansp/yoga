@@ -94,9 +94,6 @@ class Asana:
         return self.name
 
     def begin(self):
-        print('Beginning lesson...')
-        os.system(f'say Beginning the lesson.')
-        sleep(5)
         print(f'{self.name}: {self.english}')
         os.system(f'say {self.english}')
 
@@ -114,7 +111,7 @@ class Asana:
 
 
 def generate_lesson(candidate_asanas, lesson_time):
-    elapsed_time = 0
+    elapsed_time = candidate_asanas[-1].time
     n = len(candidate_asanas)
     asanas = [None] * n
     # Automatically add savasana
@@ -139,6 +136,9 @@ class Lesson:
         self.asanas = asanas
 
     def begin(self):
+        print('Beginning lesson...')
+        os.system(f'say Beginning the lesson.')
+        sleep(5)
         for asana in self.asanas:
             do_both_sides = asana.do_both_sides
             time = asana.time_per_side
