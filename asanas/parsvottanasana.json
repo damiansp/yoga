@@ -3,5 +3,5 @@
  "english": "flank extended",
  "images": [26],
  "doBothSides": true,
- "minTime": 20,
- "maxTime": 30}
+ "minTime": 30,
+ "maxTime": 40}
