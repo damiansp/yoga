@@ -30,7 +30,8 @@ def main(args):
     lesson = Lesson(asanas)
     lesson.begin()
     
-    
+
+# TODO: update using parseargs
 def parse():
     if len(sys.argv) < 2:
         print('usage: main.py week [time_in_mins] [include_earlier]')
@@ -95,12 +96,12 @@ class Asana:
 
     def begin(self):
         print(f'{self.name}: {self.english}')
-        os.system(f'say {self.english}')
-
+        say(self.english)
+        
     def switch_sides(self):
         if self.do_both_sides:
             print('other side')
-            os.system('say other side')
+            say('other side')
         else:
             raise ValueError(
                 f'{self.name} does not have left and right versions')
@@ -110,7 +111,15 @@ class Asana:
         return self.total_time
 
 
+def say(text):
+    os.system(f'say {text}')
+
+
+
 def generate_lesson(candidate_asanas, lesson_time):
+    # For each lesson, if time is not sufficient for all asanas, do a random
+    # subset that will fit in the time allowed, but maintain the progression
+    # order
     elapsed_time = candidate_asanas[-1].time
     n = len(candidate_asanas)
     asanas = [None] * n
@@ -137,7 +146,7 @@ class Lesson:
 
     def begin(self):
         print('Beginning lesson...')
-        os.system(f'say Beginning the lesson.')
+        say('Beginning the lesson.')
         sleep(5)
         for asana in self.asanas:
             do_both_sides = asana.do_both_sides
@@ -147,7 +156,7 @@ class Lesson:
             if do_both_sides:
                 asana.switch_sides()
                 sleep(time)
-        os.system('say namaste')
+        sat('namaste')
 
 
 if __name__ == '__main__':
