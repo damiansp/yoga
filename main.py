@@ -83,6 +83,7 @@ class Asana:
         self.name = asana_obj['asana']
         self.hindi = asana_obj['hindi']
         self.english = asana_obj['english']
+        self.images = asana_obj['images']
         self.min_time = asana_obj['minTime']
         self.max_time = asana_obj['maxTime']
         self.do_both_sides = asana_obj['doBothSides']
@@ -95,7 +96,8 @@ class Asana:
         return self.name
 
     def begin(self):
-        print(f'{self.name}: {self.english}')
+        print(f'{self.name}: {self.english} '
+              f'(images: {", ".join([str(x) for x in self.images])})')
         say(self.english)
         
     def switch_sides(self):
