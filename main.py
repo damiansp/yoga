@@ -97,8 +97,9 @@ class Asana:
 
     def begin(self):
         print(f'{self.name}: {self.english} '
-              f'(images: {", ".join([str(x) for x in self.images])})')
-        say(self.english)
+              f'({standardize_time(self.time_per_side)}; '
+              f'images: {", ".join([str(x) for x in self.images])})')
+        say(f'{self.english} for {standardize_time(self.time_per_side)}')
         
     def switch_sides(self):
         if self.do_both_sides:
@@ -116,6 +117,14 @@ class Asana:
 def say(text):
     os.system(f'say {text}')
 
+
+def standardize_time(time_in_s):
+    if time_in_s < 60:
+        return f'{time_in_s} seconds'
+    minutes, seconds = time_in_s // 60, time_in_s % 60
+    minutes = f'{minutes} minute%s' % ('' if minutes == 1 else 's')
+    seconds = '' if seconds == 0 else f' and {seconds} seconds'
+    return f'{minutes}{seconds}'
 
 
 def generate_lesson(candidate_asanas, lesson_time):
@@ -158,7 +167,7 @@ class Lesson:
             if do_both_sides:
                 asana.switch_sides()
                 sleep(time)
-        sat('namaste')
+        say('namaste')
 
 
 if __name__ == '__main__':
