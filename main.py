@@ -55,7 +55,7 @@ def load_weekly_schedule(week):
     for schedule in schedules:
         week_str = schedule.replace('weekly_', '').replace('.json', '')
         weeks = [int(x) for x in week_str.split('_')]
-        if week in weeks:
+        if weeks[0] <= week <= weeks[1]:
             with open(f'{WEEKLY}/{schedule}', 'r') as f:
                 asana_list = json.load(f)
             return asana_list
