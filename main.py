@@ -44,7 +44,8 @@ def parse():
     if len(sys.argv) > 3:
         include_earlier = True if sys.argv[3].lower() == "true" else False
     if include_earlier:
-        probs = np.array(range(1, week + 1))
+        #probs = np.array(range(1, week + 1))
+        probs = np.array([0.85**i for i in range(week)][::-1])
         probs = probs / probs.sum()
         week = np.random.choice(range(1, week + 1), 1, p=probs)
     return week, total_time
