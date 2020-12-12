@@ -2,7 +2,7 @@
 
 # main.py
 # usage
-#   main.py week [time_in_mins] [include_earlier]
+#   main.py week [time_in_mins] [include_earlier="true"]
 #
 #   week: week in course
 #   time_in_mins: (int) total time of yoga session (defaults to 30)
@@ -11,7 +11,7 @@
 import json
 import os
 import sys
-from time import sleep
+from time import sleep, time
 
 import numpy as np
 
@@ -121,8 +121,12 @@ def say(text):
 
 def standardize_time(time_in_s):
     if time_in_s < 60:
-        return f'{time_in_s} seconds'
-    minutes, seconds = time_in_s // 60, time_in_s % 60
+        return f'{int(round(time_in_s))} seconds'
+    minutes, seconds = int(time_in_s // 60), time_in_s % 60
+    seconds = int(round(seconds))
+    if seconds == 60:
+        minutes += 1
+        seconds = 0
     minutes = f'{minutes} minute%s' % ('' if minutes == 1 else 's')
     seconds = '' if seconds == 0 else f' and {seconds} seconds'
     return f'{minutes}{seconds}'
@@ -149,6 +153,18 @@ def generate_lesson(candidate_asanas, lesson_time):
         asanas[i] = candidate_asanas[i]
         elapsed_time += asana_time
     asanas = [a for a in asanas if a is not None]
+    # Adjust time each to make exact
+    if elapsed_time !=lesson_time:
+        asanas = adjust_times(asanas, lesson_time, elapsed_time)
+    return asanas
+
+
+def adjust_times(asanas, lesson_time, elapsed_time):
+    print('Updating time each...')
+    factor = lesson_time / elapsed_time
+    for a in asanas:
+        a.time_per_side *= factor
+        a.total_time *= factor
     return asanas
 
 
@@ -160,15 +176,18 @@ class Lesson:
         print('Beginning lesson...')
         say('Beginning the lesson.')
         sleep(5)
+        start = time()
         for asana in self.asanas:
             do_both_sides = asana.do_both_sides
-            time = asana.time_per_side
+            asana_time = asana.time_per_side
             asana.begin()
-            sleep(time)
+            sleep(asana_time)
             if do_both_sides:
                 asana.switch_sides()
-                sleep(time)
+                sleep(asana_time)
+        elapsed_time = time() - start
         say('namaste')
+        print('Elapsed time:', elapsed_time)
 
 
 if __name__ == '__main__':
