@@ -1,7 +1,8 @@
 {"asana": "salamba sarvangasana 1",
-    "hindi": "सालमब सार्वागंासन १" ,
+ "hindi": "सालमब सार्वागंासन १" ,
  "english": "shoulder stand 1",
  "images": [223, 224],
+ "imgFile": "salambaSarvangasana1.jpg",
  "doBothSides": false,
  "minTime": 60,
  "maxTime": 300}

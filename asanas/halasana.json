@@ -2,6 +2,7 @@
  "hindi": "हलासन",
  "english": "plough",
  "images": [244],
+ "imgFile": "halasana.jpg",
  "doBothSides": false,
  "minTime": 60,
  "maxTime": 300}

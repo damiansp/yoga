@@ -2,6 +2,7 @@
  "hindi": "गोमुखासन",
  "english": "cow face",
  "images": [80],
+ "imgFile": "gomukhasana.jpg",
  "doBothSides": true,
  "minTime": 30,
  "maxTime": 60}

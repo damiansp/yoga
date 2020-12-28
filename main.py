@@ -14,10 +14,12 @@ import sys
 from time import sleep, time
 
 import numpy as np
+from PIL import Image
 
 
 WEEKLY = 'schedules/weekly'
 ASANAS = 'asanas'
+IMG = 'images'
 
 
 def main(args):
@@ -92,15 +94,26 @@ class Asana:
             round(np.random.uniform(self.min_time, self.max_time)))
         self.total_time = (2 * self.time_per_side if self.do_both_sides
                            else self.time_per_side)
+        self.img = asana_obj.get('imgFile', None)
 
     def __str__(self):
         return self.name
 
-    def begin(self):
+    def begin(self, current_im=None):
+        if current_im is not None:
+            current_im.close()
+        im = None
+        if self.img is not None:
+            try:
+                im = Image.open(f'{IMG}/{self.img}')
+                im.show()
+            except BaseException as e:
+                print(f'Failed to open {self.img}\n{e}')
         print(f'{self.name}: {self.english} '
               f'({standardize_time(self.time_per_side)}; '
               f'images: {", ".join([str(x) for x in self.images])})')
         say(f'{self.english} for {standardize_time(self.time_per_side)}')
+        return im
         
     def switch_sides(self):
         if self.do_both_sides:
@@ -177,14 +190,17 @@ class Lesson:
         say('Beginning the lesson.')
         sleep(5)
         start = time()
+        im = None
         for asana in self.asanas:
             do_both_sides = asana.do_both_sides
             asana_time = asana.time_per_side
-            asana.begin()
+            im = asana.begin(im)
             sleep(asana_time)
             if do_both_sides:
                 asana.switch_sides()
                 sleep(asana_time)
+        if im is not None:
+            im.close()
         elapsed_time = time() - start
         say('namaste')
         print('Elapsed time:', elapsed_time)

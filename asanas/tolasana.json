@@ -2,6 +2,7 @@
  "hindi": "तोलासन",
  "english": "scales",
  "images": [108],
+ "imgFile": "tolasana.jpg",
  "doBothSides": true,
  "minTime": 10,
  "maxTime": 60}

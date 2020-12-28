@@ -2,6 +2,7 @@
  "hindi": "शलभासन",
  "english": "locust",
  "images": [60],
+ "imgFile": "salabhasana.jpg",
  "doBothSides": false,
  "minTime": 20,
  "maxTime": 60}

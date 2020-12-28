@@ -2,6 +2,7 @@
  "hindi": "धनुरासन",
  "english": "bow",
  "images": [63],
+ "imgFile": "dhanurasana.jpg",
  "doBothSides": false,
  "minTime": 20,
  "maxTime": 60}

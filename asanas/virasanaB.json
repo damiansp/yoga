@@ -2,6 +2,7 @@
  "hindi": "वीरासन",
  "english": "seated warrior, raised arms",
  "images": [91],
+ "imgFile": "virasanaB.jpg",
  "doBothSides": false,
  "minTime": 60,
  "maxTime": 60}
