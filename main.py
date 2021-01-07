@@ -2,7 +2,7 @@
 
 # main.py
 # usage
-#   main.py week [time_in_mins] [include_earlier="true"]
+#   main.py week [time_in_mins] [include_earlier="true"] [corpse=False]
 #
 #   week: week in course
 #   time_in_mins: (int) total time of yoga session (defaults to 30)
@@ -23,12 +23,12 @@ IMG = 'images'
 
 
 def main(args):
-    week, total_time = args
+    week, total_time, do_corpse = args
     print(f'Starting program for week {week}\nTotal time {total_time / 60} min')
     asana_list = load_weekly_schedule(week)
     candidate_asanas = load_all_asanas(asana_list)
     candidate_asanas = [Asana(asana) for asana in candidate_asanas]
-    asanas = generate_lesson(candidate_asanas, total_time)
+    asanas = generate_lesson(candidate_asanas, total_time, do_corpse)
     lesson = Lesson(asanas)
     lesson.begin()
     
@@ -50,7 +50,10 @@ def parse():
         probs = np.array([0.85**i for i in range(week)][::-1])
         probs = probs / probs.sum()
         week = np.random.choice(range(1, week + 1), 1, p=probs)
-    return week, total_time
+    print(sys.argv, len(sys.argv))
+    do_corpse = len(sys.argv) < 5
+    print('Corpse:', do_corpse)
+    return week, total_time, do_corpse
 
 
 def load_weekly_schedule(week):
@@ -145,15 +148,20 @@ def standardize_time(time_in_s):
     return f'{minutes}{seconds}'
 
 
-def generate_lesson(candidate_asanas, lesson_time):
+def generate_lesson(candidate_asanas, lesson_time, do_corpse):
     # For each lesson, if time is not sufficient for all asanas, do a random
     # subset that will fit in the time allowed, but maintain the progression
     # order
-    elapsed_time = candidate_asanas[-1].time
     n = len(candidate_asanas)
     asanas = [None] * n
-    # Automatically add savasana
-    asanas[-1] = candidate_asanas[-1]
+    if do_corpse:
+        # Automatically add savasana
+        print('Including savasana')
+        asanas[-1] = candidate_asanas[-1]
+        elapsed_time = candidate_asanas[-1].time
+    else:
+        print('Omitting savasana')
+        elapsed_time = 0
     indices = np.array(range(n - 1))
     np.random.shuffle(indices)
     indices = list(indices)
