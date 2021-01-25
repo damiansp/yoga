@@ -1,7 +1,8 @@
 {"asana": "utthita trikonasasa",
  "hindi": "उत्थित त्रिोनासन",
  "english": "extended triangle",
-    "images": [4, 5],
+ "images": [4, 5],
+ "imgFile": "utthitatrikonasasa.jpg",
  "doBothSides": true,
  "minTime": 30,
  "maxTime": 60}

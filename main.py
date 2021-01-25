@@ -210,7 +210,7 @@ class Lesson:
         if im is not None:
             im.close()
         elapsed_time = time() - start
-        say('namaste')
+        say('nummusday')
         print('Elapsed time:', elapsed_time)
 
 
