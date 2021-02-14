@@ -8,6 +8,7 @@
 #   time_in_mins: (int) total time of yoga session (defaults to 30)
 #   include_earlier: (bool) if true, randomly chooses from all weks up to,
 #     {week}, weighted more heavily toward recent weeks. (defaults to False)
+import argparse
 import json
 import os
 import sys
@@ -23,37 +24,44 @@ IMG = 'images'
 
 
 def main(args):
-    week, total_time, do_corpse = args
-    print(f'Starting program for week {week}\nTotal time {total_time / 60} min')
+    week, total_time, do_corpse, max_per = parse_args(args)
     asana_list = load_weekly_schedule(week)
     candidate_asanas = load_all_asanas(asana_list)
-    candidate_asanas = [Asana(asana) for asana in candidate_asanas]
+    candidate_asanas = [Asana(asana, max_per) for asana in candidate_asanas]
     asanas = generate_lesson(candidate_asanas, total_time, do_corpse)
     lesson = Lesson(asanas)
     lesson.begin()
     
 
-# TODO: update using parseargs
-def parse():
-    if len(sys.argv) < 2:
-        print('usage: main.py week [time_in_mins] [include_earlier]')
-        sys.exit()
-    week = int(sys.argv[1])
-    total_time = 30 * 60
-    include_earlier = False
-    if len(sys.argv) > 2:
-        total_time = float(sys.argv[2]) * 60
-    if len(sys.argv) > 3:
-        include_earlier = True if sys.argv[3].lower() == "true" else False
-    if include_earlier:
-        #probs = np.array(range(1, week + 1))
-        probs = np.array([0.85**i for i in range(week)][::-1])
+def parse_args(args):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--week', help='maximum week to select', type=int)
+    parser.add_argument(
+        '-t', '--time', help='time of practice in minutes', type=int, default=20)
+    parser.add_argument(
+        '-e', '--exact', help='run only the specified week', action='store_true')
+    parser.add_argument(
+        '-c', '--nocorpse', help='omit corpse pose', action='store_true')
+    parser.add_argument('-x',
+                        '--max_per',
+                        help='maximum minutes per asana',
+                        type=int,
+                        default=np.inf)
+    args = parser.parse_args()
+    # change times to seconds
+    args.time *= 60.
+    args.max_per *= 60.
+    if not args.exact:
+        probs = np.array([0.85**i for i in range(args.week)][::-1])
         probs = probs / probs.sum()
-        week = np.random.choice(range(1, week + 1), 1, p=probs)
-    print(sys.argv, len(sys.argv))
-    do_corpse = len(sys.argv) < 5
-    print('Corpse:', do_corpse)
-    return week, total_time, do_corpse
+        week = np.random.choice(range(1, args.week + 1), 1, p=probs)[0]
+        week = week
+    do_corpse = not args.nocorpse
+    args = [week, args.time, do_corpse, args.max_per]
+    print('Running with args:')
+    for name, val in zip(['week', 'total_time', 'do_corpse', 'max_per'], args):
+        print(f'  {name:10s}: {val}')
+    return args
 
 
 def load_weekly_schedule(week):
@@ -85,13 +93,15 @@ def load_all_asanas(asana_list):
 
         
 class Asana:
-    def __init__(self, asana_obj):
+    def __init__(self, asana_obj, max_per=np.inf):
         self.name = asana_obj['asana']
+        if self.name == 'savasana': # max_per doesn't apply to corpse pose
+            max_per = np.inf
         self.hindi = asana_obj['hindi']
         self.english = asana_obj['english']
         self.images = asana_obj['images']
         self.min_time = asana_obj['minTime']
-        self.max_time = asana_obj['maxTime']
+        self.max_time = min(asana_obj['maxTime'], max_per)
         self.do_both_sides = asana_obj['doBothSides']
         self.time_per_side = int(
             round(np.random.uniform(self.min_time, self.max_time)))
@@ -131,8 +141,8 @@ class Asana:
         return self.total_time
 
 
-def say(text):
-    os.system(f'say {text}')
+def say(text, voice='Rishi'):
+    os.system(f'say -v {voice} {text}')
 
 
 def standardize_time(time_in_s):
@@ -194,7 +204,6 @@ class Lesson:
         self.asanas = asanas
 
     def begin(self):
-        print('Beginning lesson...')
         say('Beginning the lesson.')
         sleep(5)
         start = time()
@@ -207,13 +216,14 @@ class Lesson:
             if do_both_sides:
                 asana.switch_sides()
                 sleep(asana_time)
-        if im is not None:
-            im.close()
+            try:
+                im.close()
+            except:
+                pass
         elapsed_time = time() - start
-        say('nummusday')
+        say('नमस्ते', voice='Lekha')
         print('Elapsed time:', elapsed_time)
 
 
 if __name__ == '__main__':
-    args = parse()
-    main(args)
+    main(sys.argv)

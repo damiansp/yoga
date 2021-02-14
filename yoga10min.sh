@@ -1,2 +1,2 @@
 WEEK=$1
-./main.py $1 10 true none
+./main.py -w $1 -t 10 -c
