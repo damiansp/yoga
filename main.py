@@ -36,10 +36,15 @@ def main(args):
 def parse_args(args):
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--week', help='maximum week to select', type=int)
-    parser.add_argument(
-        '-t', '--time', help='time of practice in minutes', type=int, default=20)
-    parser.add_argument(
-        '-e', '--exact', help='run only the specified week', action='store_true')
+    parser.add_argument('-t',
+                        '--time',
+                        help='time of practice in minutes',
+                        type=int,
+                        default=20)
+    parser.add_argument('-e',
+                        '--exact',
+                        help='run only the specified week',
+                        action='store_true')
     parser.add_argument(
         '-c', '--nocorpse', help='omit corpse pose', action='store_true')
     parser.add_argument('-x',
@@ -125,6 +130,7 @@ class Asana:
         print(f'{self.name}: {self.english} '
               f'({standardize_time(self.time_per_side)}; '
               f'images: {", ".join([str(x) for x in self.images])})')
+        say(self.hindi, voice='Lekha')
         say(f'{self.english} for {standardize_time(self.time_per_side)}')
         return im
         
