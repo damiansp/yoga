@@ -52,12 +52,15 @@ def parse_args(args):
                         help='maximum minutes per asana',
                         type=int,
                         default=np.inf)
+    parser.add_argument(
+        '-l', '--lmb', help='lambda for weighting', type=float, default=0.9)
     args = parser.parse_args()
     # change times to seconds
     args.time *= 60.
     args.max_per *= 60.
+    assert 0 < args.lmb <= 1, 'lambda must be on (0, 1]'
     if not args.exact:
-        probs = np.array([0.85**i for i in range(args.week)][::-1])
+        probs = np.array([args.lmb**i for i in range(args.week)][::-1])
         probs = probs / probs.sum()
         week = np.random.choice(range(1, args.week + 1), 1, p=probs)[0]
         week = week
@@ -127,7 +130,7 @@ class Asana:
                 im.show()
             except BaseException as e:
                 print(f'Failed to open {self.img}\n{e}')
-        print(f'{self.name}: {self.english} '
+        print(f'{self.name}: {self.english} ({self.hindi})'
               f'({standardize_time(self.time_per_side)}; '
               f'images: {", ".join([str(x) for x in self.images])})')
         say(self.hindi, voice='Lekha')
