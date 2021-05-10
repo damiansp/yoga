@@ -3,6 +3,6 @@
  "english": "upward bow - from ground",
  "images": [482],
  "imgFile": "urdhvaDhanurasana1.jpg",
- "doBothSides": true,
+ "doBothSides": false,
  "minTime": 30,
  "maxTime": 60}

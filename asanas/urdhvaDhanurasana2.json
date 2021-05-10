@@ -3,6 +3,6 @@
  "english": "upward bow 2",
  "images": [487],
  "imgFile": "urdhvaDhanurasana2.jpg",
- "doBothSides": true,
+ "doBothSides": false,
  "minTime": 60,
  "maxTime": 180}
