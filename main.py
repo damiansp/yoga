@@ -35,23 +35,27 @@ def main(args):
 
 def parse_args(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-w', '--week', help='maximum week to select', type=int)
-    parser.add_argument('-t',
-                        '--time',
-                        help='time of practice in minutes',
-                        type=int,
-                        default=20)
-    parser.add_argument('-e',
-                        '--exact',
-                        help='run only the specified week',
-                        action='store_true')
+    parser.add_argument(
+        '-w', '--week', help='maximum week to select', type=int)
+    parser.add_argument(
+        '-t',
+        '--time',
+        help='time of practice in minutes',
+        type=int,
+        default=20)
+    parser.add_argument(
+        '-e',
+        '--exact',
+        help='run only the specified week',
+        action='store_true')
     parser.add_argument(
         '-c', '--nocorpse', help='omit corpse pose', action='store_true')
-    parser.add_argument('-x',
-                        '--max_per',
-                        help='maximum minutes per asana',
-                        type=int,
-                        default=np.inf)
+    parser.add_argument(
+        '-x',
+        '--max_per',
+        help='maximum minutes per asana',
+        type=int,
+        default=np.inf)
     parser.add_argument(
         '-l', '--lmb', help='lambda for weighting', type=float, default=0.9)
     args = parser.parse_args()
@@ -113,8 +117,9 @@ class Asana:
         self.do_both_sides = asana_obj['doBothSides']
         self.time_per_side = int(
             round(np.random.uniform(self.min_time, self.max_time)))
-        self.total_time = (2 * self.time_per_side if self.do_both_sides
-                           else self.time_per_side)
+        self.total_time = (
+            2 * self.time_per_side if self.do_both_sides
+            else self.time_per_side)
         self.img = asana_obj.get('imgFile', None)
 
     def __str__(self):
@@ -130,9 +135,10 @@ class Asana:
                 im.show()
             except BaseException as e:
                 print(f'Failed to open {self.img}\n{e}')
-        print(f'{self.name}: {self.english} ({self.hindi})'
-              f'({standardize_time(self.time_per_side)}; '
-              f'images: {", ".join([str(x) for x in self.images])})')
+        print(
+            f'{self.name}: {self.english} ({self.hindi})'
+            f'({standardize_time(self.time_per_side)}; '
+            f'images: {", ".join([str(x) for x in self.images])})')
         say(self.hindi, voice='Lekha')
         say(f'{self.english} for {standardize_time(self.time_per_side)}')
         return im
