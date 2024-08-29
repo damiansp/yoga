@@ -15,6 +15,7 @@ import sys
 from time import sleep, time
 
 import numpy as np
+import psutil
 from PIL import Image
 
 
@@ -231,13 +232,17 @@ class Lesson:
             if do_both_sides:
                 asana.switch_sides()
                 sleep(asana_time)
-            try:
-                im.close()
-            except:
-                pass
+            self._close_img()
         elapsed_time = time() - start
         say('नमस्ते', voice='Lekha')
         print('Elapsed time:', elapsed_time)
+
+    @staticmethod
+    def _close_img():
+        for proc in psutil.process_iter():
+            if proc.name() == 'Preview':
+                proc.kill()
+                break
 
 
 if __name__ == '__main__':
